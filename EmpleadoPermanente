@@ -1,9 +1,5 @@
 package Clases;
 
-/**
- *
- * @author user
- */
 
 public class EmpleadoPermanente extends Empleado {
     private String beneficios;

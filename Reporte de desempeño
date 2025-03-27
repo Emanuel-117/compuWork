@@ -1,10 +1,6 @@
 package Clases;
 
 import java.util.Scanner;
-/**
- *
- * @author user
- */
 
 public class ReporteDesempeño {
     private Empleado empleado;
@@ -43,46 +39,56 @@ public class ReporteDesempeño {
     }
 
     public static void mostrarReporte() {
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Ingrese el ID del Empleado: ");
+            int idEmpleado = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
+            System.out.print("Ingrese el rendimiento del empleado: ");
+            String rendimiento = scanner.nextLine();
 
-        System.out.print("Ingrese el ID del Empleado: ");
-        int idEmpleado = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Ingrese el rendimiento del empleado: ");
-        String rendimiento = scanner.nextLine();
+            Empleado empleado = buscarEmpleado(idEmpleado);
 
-        Empleado empleado = buscarEmpleado(idEmpleado);
-
-        if (empleado != null) {
-            ReporteDesempeño reporte = new ReporteDesempeño(empleado, rendimiento);
-            System.out.println("Reporte de desempeño generado:");
-            System.out.println(reporte);
-        } else {
-            System.out.println("Empleado no encontrado. Verifique el ID.");
+            if (empleado != null) {
+                ReporteDesempeño reporte = new ReporteDesempeño(empleado, rendimiento);
+                System.out.println("Reporte de desempeño generado:");
+                System.out.println(reporte);
+            } else {
+                System.out.println("Empleado no encontrado. Verifique el ID.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al mostrar el reporte: " + e.getMessage());
         }
     }
 
     public static void verDesempeño(int idEmpleado) {
-        Empleado empleado = buscarEmpleado(idEmpleado);
+        try {
+            Empleado empleado = buscarEmpleado(idEmpleado);
 
-        if (empleado != null) {
-            String rendimiento = "Rendimiento satisfactorio"; 
-            System.out.println("Reporte de Desempeño:");
-            System.out.println("Empleado ID: " + empleado.getIdEmpleado());
-            System.out.println("Nombre: " + empleado.getNombre());
-            System.out.println("Rendimiento: " + rendimiento);
-        } else {
-            System.out.println("Empleado no encontrado. Verifique el ID.");
+            if (empleado != null) {
+                String rendimiento = "Rendimiento satisfactorio"; 
+                System.out.println("Reporte de Desempeño:");
+                System.out.println("Empleado ID: " + empleado.getIdEmpleado());
+                System.out.println("Nombre: " + empleado.getNombre());
+                System.out.println("Rendimiento: " + rendimiento);
+            } else {
+                System.out.println("Empleado no encontrado. Verifique el ID.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al ver el desempeño del empleado: " + e.getMessage());
         }
     }
 
     private static Empleado buscarEmpleado(int idEmpleado) {
-        for (Departamento dept : Departamento.getListaDepartamentos()) {
-            for (Empleado emp : dept.getEmpleados()) {
-                if (emp.getIdEmpleado() == idEmpleado) {
-                    return emp;
+        try {
+            for (Departamento dept : Departamento.getListaDepartamentos()) {
+                for (Empleado emp : dept.getEmpleados()) {
+                    if (emp.getIdEmpleado() == idEmpleado) {
+                        return emp;
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Error al buscar el empleado: " + e.getMessage());
         }
         return null;
     }

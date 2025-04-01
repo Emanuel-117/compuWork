@@ -11,8 +11,7 @@ public class CompuWork1 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ventanaPrincipal ventana = new ventanaPrincipal();
-        ventana.setVisible(true);
+        
 
         try {
             Departamento.inicializarDepartamentos();
